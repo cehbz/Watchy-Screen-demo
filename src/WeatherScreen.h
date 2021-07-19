@@ -6,6 +6,7 @@ class WeatherScreen : public Screen {
  public:
   WeatherScreen() : Screen("Weather"){};
   void show();
+  void back();
   void up();
   void down();
 };

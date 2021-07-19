@@ -6,6 +6,7 @@ class OrientationScreen : public Screen {
  public:
   OrientationScreen() : Screen("Orientation"){};
   void show();
+  void back();
   void up();
   void down();
 };

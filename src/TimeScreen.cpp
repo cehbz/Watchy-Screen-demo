@@ -60,4 +60,5 @@ void TimeScreen::show() {
   display.printf(", %s %d %d\n", monthStr(currentTime.Month), currentTime.Day,
                  currentTime.Year + YEAR_OFFSET);
 }
+void TimeScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
 void TimeScreen::down() { Watchy::setScreen(&weatherScreen); };

@@ -137,5 +137,6 @@ void WeatherScreen::show() {
         weatherConditionCodeToString(wd.weatherConditionCode));
 }
 
+void WeatherScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
 void WeatherScreen::up() { Watchy::setScreen(&timeScreen); };
 void WeatherScreen::down() { Watchy::setScreen(&batteryScreen); };

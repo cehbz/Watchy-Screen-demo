@@ -10,6 +10,7 @@ void SettingsScreen::show() {
   Watchy::display.setCursor(0, 0);
   Watchy::display.printf("\nSettings\n");
 }
+void SettingsScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
 void SettingsScreen::up() { Watchy::setScreen(&orientationScreen); }
 void SettingsScreen::down() { Watchy::setScreen(&stepsScreen); }
 

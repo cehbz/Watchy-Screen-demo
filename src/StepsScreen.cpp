@@ -10,6 +10,7 @@ void StepsScreen::show() {
   Watchy::display.setCursor(0, 0);
   Watchy::display.printf("\nSteps\n");
 }
+void StepsScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
 void StepsScreen::up() { Watchy::setScreen(&settingsScreen); }
 void StepsScreen::down() { Watchy::setScreen(&wifiScreen); }
 
