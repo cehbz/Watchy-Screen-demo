@@ -8,7 +8,7 @@
 void BluetoothScreen::show() {
   Watchy::display.setFont(&OptimaLTStd12pt7b);
   Watchy::display.setCursor(0, 0);
-  Watchy::display.printf("\nBluetooth\n");
+  Watchy::display.printf("\nbluetooth\n");
 }
 void BluetoothScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
 void BluetoothScreen::up() { Watchy::setScreen(&batteryScreen); }

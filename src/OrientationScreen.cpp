@@ -8,7 +8,7 @@
 void OrientationScreen::show() {
   Watchy::display.setFont(&OptimaLTStd12pt7b);
   Watchy::display.setCursor(0, 0);
-  Watchy::display.printf("\nOrientation\n");
+  Watchy::display.printf("\norientation\n");
 }
 void OrientationScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
 void OrientationScreen::up() { Watchy::setScreen(&bluetoothScreen); }

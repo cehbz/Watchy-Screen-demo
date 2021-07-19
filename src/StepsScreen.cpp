@@ -8,7 +8,7 @@
 void StepsScreen::show() {
   Watchy::display.setFont(&OptimaLTStd12pt7b);
   Watchy::display.setCursor(0, 0);
-  Watchy::display.printf("\nSteps\n");
+  Watchy::display.printf("\nsteps\n");
 }
 void StepsScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
 void StepsScreen::up() { Watchy::setScreen(&settingsScreen); }

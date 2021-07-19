@@ -4,7 +4,7 @@
 
 class BatteryScreen : public Screen {
  public:
-  BatteryScreen() : Screen("Battery"){};
+  BatteryScreen() : Screen("battery"){};
   void show();
   void back();
   void up();

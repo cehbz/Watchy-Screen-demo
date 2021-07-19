@@ -8,7 +8,7 @@
 void SettingsScreen::show() {
   Watchy::display.setFont(&OptimaLTStd12pt7b);
   Watchy::display.setCursor(0, 0);
-  Watchy::display.printf("\nSettings\n");
+  Watchy::display.printf("\nsettings\n");
 }
 void SettingsScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
 void SettingsScreen::up() { Watchy::setScreen(&orientationScreen); }

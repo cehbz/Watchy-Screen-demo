@@ -7,7 +7,7 @@
 void WifiScreen::show() {
   Watchy::display.setFont(&OptimaLTStd12pt7b);
   Watchy::display.setCursor(0, 0);
-  Watchy::display.printf("\nWifi\n");
+  Watchy::display.printf("\nwifi\n");
 }
 void WifiScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
 void WifiScreen::up() { Watchy::setScreen(&stepsScreen); }

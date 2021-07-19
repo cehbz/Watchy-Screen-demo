@@ -4,7 +4,7 @@
 
 class BluetoothScreen : public Screen {
  public:
-  BluetoothScreen() : Screen("Bluetooth"){};
+  BluetoothScreen() : Screen("bluetooth"){};
   void show();
   void back();
   void up();
