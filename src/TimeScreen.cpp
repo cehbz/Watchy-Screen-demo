@@ -4,6 +4,7 @@
 #include "OptimaLTStd22pt7b.h"
 #include "OptimaLTStd7pt7b.h"
 #include "OptimaLTStd_Bold22pt7b.h"
+#include "WeatherScreen.h"
 
 using namespace Watchy;
 
@@ -59,5 +60,5 @@ void TimeScreen::show() {
   display.printf(", %s %d %d\n", monthStr(currentTime.Month), currentTime.Day,
                  currentTime.Year + YEAR_OFFSET);
 }
-void TimeScreen::up() { Watchy::setScreen(&weather); };
-void TimeScreen::down() { Watchy::setScreen(&weather); };
+void TimeScreen::up() { Watchy::setScreen(&weatherScreen); };
+void TimeScreen::down() { Watchy::setScreen(&weatherScreen); };
