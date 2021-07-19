@@ -6,13 +6,20 @@ It includes screens for:
 
 * Time/Date
 * Current Weather/Location
-* Steps
-* Orientation
 * Battery Status
-* Wifi Status
 * Bluetooth Status
+* Orientation
 * Settings
   * Set Time
   * Setup Wifi
   * Update face via BLE OTA
-  * Set Location
+* Steps
+* Wifi Status
+
+## UI
+`up` moves up in that list. 
+`down` moves down. 
+`back` takes you back to the first screen - the time/date screen.
+`menu` displays the value/sub-screen for that item, `back` returns from the value
+
+The implementations should be clear from the code.
