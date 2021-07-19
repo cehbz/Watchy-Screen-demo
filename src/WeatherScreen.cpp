@@ -3,6 +3,7 @@
 
 #include "OptimaLTStd12pt7b.h"
 #include "TimeScreen.h"
+#include "BatteryScreen.h"
 
 using namespace Watchy;
 
@@ -129,8 +130,7 @@ void WeatherScreen::show() {
   display.setFont(&OptimaLTStd12pt7b);
   display.setTextWrap(true);
   display.setCursor(0, 0);
-  weatherData wd = {55, 232};
-  // weatherData wd = getWeatherData();
+  weatherData wd = getWeatherData();
   display.printf("\n%d deg\n%s", wd.temperature,
                  weatherConditionCodeToString(wd.weatherConditionCode));
   DEBUG("\n%d deg\n%s\n", wd.temperature,
@@ -138,4 +138,4 @@ void WeatherScreen::show() {
 }
 
 void WeatherScreen::up() { Watchy::setScreen(&timeScreen); };
-void WeatherScreen::down() { Watchy::setScreen(&timeScreen); };
+void WeatherScreen::down() { Watchy::setScreen(&batteryScreen); };

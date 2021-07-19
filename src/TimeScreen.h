@@ -6,7 +6,6 @@ class TimeScreen : public Screen {
  public:
   TimeScreen() : Screen("Time"){};
   void show();
-  void up();
   void down();
 };
 

@@ -7,7 +7,6 @@ class WifiScreen : public Screen {
   WifiScreen() : Screen("Wifi"){};
   void show();
   void up();
-  void down();
 };
 
 extern WifiScreen wifiScreen;
