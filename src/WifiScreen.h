@@ -7,6 +7,7 @@ class WifiScreen : public Screen {
   WifiScreen() : Screen("Wifi"){};
   void show();
   void back();
+  void menu();
   void up();
 };
 

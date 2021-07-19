@@ -7,6 +7,7 @@ class SettingsScreen : public Screen {
   SettingsScreen() : Screen("Settings"){};
   void show();
   void back();
+  void menu();
   void up();
   void down();
 };

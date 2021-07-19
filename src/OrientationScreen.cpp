@@ -3,6 +3,7 @@
 #include "BluetoothScreen.h"
 #include "OptimaLTStd12pt7b.h"
 #include "SettingsScreen.h"
+#include "ShowOrientationScreen.h"
 #include "Watchy.h"
 
 void OrientationScreen::show() {
@@ -11,6 +12,7 @@ void OrientationScreen::show() {
   Watchy::display.printf("\norientation\n");
 }
 void OrientationScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
+void OrientationScreen::menu() { Watchy::setScreen(&showOrientationScreen); }
 void OrientationScreen::up() { Watchy::setScreen(&bluetoothScreen); }
 void OrientationScreen::down() { Watchy::setScreen(&settingsScreen); }
 

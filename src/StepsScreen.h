@@ -7,6 +7,7 @@ class StepsScreen : public Screen {
   StepsScreen() : Screen("Steps"){};
   void show();
   void back();
+  void menu();
   void up();
   void down();
 };

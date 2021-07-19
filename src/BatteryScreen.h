@@ -7,6 +7,7 @@ class BatteryScreen : public Screen {
   BatteryScreen() : Screen("battery"){};
   void show();
   void back();
+  void menu();
   void up();
   void down();
 };
