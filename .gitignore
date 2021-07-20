@@ -31,3 +31,6 @@ nbproject
 # Ignore all local history of files
 .history
 .ionide
+
+# ignore temp files
+.temp
