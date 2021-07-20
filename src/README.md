@@ -17,8 +17,9 @@ It includes screens for:
 * Wifi Status
 
 ## UI
-`up` moves up in that list. 
-`down` moves down. 
+
+`up` moves up in that list.
+`down` moves down.
 `back` takes you back to the first screen - the time/date screen.
 `menu` displays the value/sub-screen for that item, `back` returns from the value
 
