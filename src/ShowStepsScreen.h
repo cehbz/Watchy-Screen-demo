@@ -4,9 +4,6 @@
 
 class ShowStepsScreen : public Screen {
  public:
-  ShowStepsScreen() : Screen("ShowSteps"){};
-  void show();
-  void back();
+  ShowStepsScreen(Screen *p = nullptr) : Screen(p) {}
+  void show() override;
 };
-
-extern ShowStepsScreen showStepsScreen;

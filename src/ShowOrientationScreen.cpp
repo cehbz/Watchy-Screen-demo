@@ -34,6 +34,3 @@ void ShowOrientationScreen::show() {
       break;
   }
 }
-void ShowOrientationScreen::back() { Watchy::setScreen(&orientationScreen); }
-
-ShowOrientationScreen showOrientationScreen;

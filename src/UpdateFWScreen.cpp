@@ -6,8 +6,6 @@
 
 using namespace Watchy;
 
-UpdateFWScreen updateFWScreen;
-
 class : public Screen {
   void show() {
     display.setFont(&FreeMonoBold9pt7b);
@@ -40,7 +38,7 @@ class : public Screen {
   }
 } updateFWDisconnectedScreen;
 
-void btPoll() {
+void btPoll(Screen *s) {
   BLE BT;
 
   // this local class variable only works because we
@@ -50,8 +48,7 @@ void btPoll() {
     BLE &BT;
 
    public:
-    updateFWDownloadingScreen(BLE &bt)
-        : Screen("updateFWDownloadingScreen"), BT(bt) {}
+    updateFWDownloadingScreen(BLE &bt) : Screen(), BT(bt) {}
     void show() {
       display.setFont(&FreeMonoBold9pt7b);
       display.setCursor(0, 30);
@@ -89,7 +86,7 @@ void btPoll() {
           // turn off radios
           WiFi.mode(WIFI_OFF);
           btStop();
-          setScreen(&menuScreen);
+          setScreen(s->parent);
           return;
         default:
           break;
@@ -115,7 +112,7 @@ class : public Screen {
     display.println("Waiting for");
     display.println("connection...");
 
-    btPoll();
+    btPoll(this); // smells like a private method
   }
 } updateFWBeginScreen;
 
@@ -134,5 +131,5 @@ void UpdateFWScreen::show() {
 
   BLE BT;
 }
-void UpdateFWScreen::back() { setScreen(&menuScreen); }
+
 void UpdateFWScreen::menu() { setScreen(&updateFWBeginScreen); }

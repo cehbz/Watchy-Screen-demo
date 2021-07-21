@@ -4,11 +4,6 @@
 
 class WeatherScreen : public Screen {
  public:
-  WeatherScreen() : Screen("Weather"){};
-  void show();
-  void back();
-  void up();
-  void down();
+  WeatherScreen(Screen *p = nullptr) : Screen(p) {}
+  void show() override;
 };
-
-extern WeatherScreen weatherScreen;

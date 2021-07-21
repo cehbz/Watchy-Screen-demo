@@ -13,6 +13,3 @@ void ShowWifiScreen::show() {
   }
   Watchy::display.printf("\nconfigured\n");
 }
-void ShowWifiScreen::back() { Watchy::setScreen(&wifiScreen); }
-
-ShowWifiScreen showWifiScreen;

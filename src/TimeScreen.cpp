@@ -8,8 +8,6 @@
 
 using namespace Watchy;
 
-TimeScreen timeScreen;
-
 const char *lows[13] = {"oh",   "one",    "two",   "three", "four",
                         "five", "six",    "seven", "eight", "nine",
                         "ten",  "eleven", "twelve"};
@@ -60,5 +58,3 @@ void TimeScreen::show() {
   display.printf(", %s %d %d\n", monthStr(currentTime.Month), currentTime.Day,
                  currentTime.Year + YEAR_OFFSET);
 }
-void TimeScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
-void TimeScreen::down() { Watchy::setScreen(&weatherScreen); };

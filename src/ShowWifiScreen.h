@@ -4,9 +4,6 @@
 
 class ShowWifiScreen : public Screen {
  public:
-  ShowWifiScreen() : Screen("ShowWifi"){};
-  void show();
-  void back();
+  ShowWifiScreen(Screen *p = nullptr) : Screen(p) {}
+  void show() override;
 };
-
-extern ShowWifiScreen showWifiScreen;

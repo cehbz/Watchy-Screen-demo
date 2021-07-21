@@ -1,7 +1,5 @@
 #include "MenuScreen.h"
 
-#include <array>
-
 #include "SetTimeScreen.h"
 #include "SettingsScreen.h"
 #include "SetupWifiScreen.h"
@@ -10,74 +8,75 @@
 
 using namespace Watchy;
 
-// consder using std::array
-const std::array<const char*, 3> menuItems = {"Set Time", "Setup WiFi",
-                                              "Update Firmware"};
-
 const int MENU_HEIGHT = 30;
 
-RTC_DATA_ATTR int MenuScreen::menuIndex;
+RTC_DATA_ATTR uint8_t MenuScreen::index;
+RTC_DATA_ATTR bool MenuScreen::active;
 
 void MenuScreen::show() {
-  DEBUG("MenuScreen::show index %d\n", menuIndex);
+  DEBUG("MenuScreen::show index %d\n", index);
+  if (active) {
+    Watchy::showWatchFace(true, items[index].screen);
+    return;
+  }
   const uint16_t fgColor =
       (screen->bgColor == GxEPD_WHITE ? GxEPD_BLACK : GxEPD_WHITE);
   display.setFont(&FreeMonoBold9pt7b);
 
-  uint8_t i = 0;
-  for (const auto& mi : menuItems) {
+  for (uint8_t i = 0; i < size; i++) {
     int16_t yPos = 30 + (MENU_HEIGHT * i);
     display.setCursor(0, yPos);
-    if (i == menuIndex) {
+    if (i == index) {
       int16_t x1, y1;
       uint16_t w, h;
 
-      display.getTextBounds(mi, 0, yPos, &x1, &y1, &w, &h);
+      display.getTextBounds(items[i].name, 0, yPos, &x1, &y1, &w, &h);
       display.fillRect(x1 - 1, y1 - 10, 200, h + 15, fgColor);
       display.setTextColor(bgColor);
-      display.println(mi);
+      display.println(items[i].name);
     } else {
       display.setTextColor(fgColor);
-      display.println(mi);
+      display.println(items[i].name);
     }
-    i++;
   }
 }
 
-void MenuScreen::menu() { doMenu(menuIndex); }
-
-void MenuScreen::back() { setScreen(&settingsScreen); }
+void MenuScreen::menu() {
+  if (active) {
+    items[index].screen->menu();
+  } else {
+    active = true;
+    show();
+  }
+}
+void MenuScreen::back() {
+  if (active) {
+    active = false;
+    show();
+  } // else { return to parent, handled by parent }
+}
 
 void MenuScreen::up() {
-  menuIndex--;
-  if (menuIndex < 0) {
-    menuIndex = menuItems.size() - 1;
+  if (active) {
+    items[index].screen->up();
+    return;
+  }
+  index--;
+  if (index < 0) {
+    index = size - 1;
   }
   showWatchFace(true);
 }
 
 void MenuScreen::down() {
-  menuIndex++;
-  if (menuIndex >= menuItems.size()) {
-    menuIndex = 0;
+  if (active) {
+    items[index].screen->down();
+    return;
+  }
+
+  index++;
+  if (index >= size) {
+    index = 0;
   }
   showWatchFace(true);
-}
-
-MenuScreen menuScreen;
-
-void MenuScreen::doMenu(int index) {
-  switch (index) {
-    case 0:
-      setScreen(&setTimeScreen);
-      break;
-    case 1:
-      setScreen(&setupWifiScreen);
-      break;
-    case 2:
-      setScreen(&updateFWScreen);
-      break;
-    default:
-      break;
-  }
 }

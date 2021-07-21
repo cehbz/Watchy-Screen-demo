@@ -4,12 +4,6 @@
 
 class SettingsScreen : public Screen {
  public:
-  SettingsScreen() : Screen("Settings"){};
-  void show();
-  void back();
-  void menu();
-  void up();
-  void down();
+  SettingsScreen(Screen *p = nullptr) : Screen(p) {}
+  void show() override;
 };
-
-extern SettingsScreen settingsScreen;

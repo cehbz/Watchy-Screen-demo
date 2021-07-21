@@ -4,12 +4,6 @@
 
 class BluetoothScreen : public Screen {
  public:
-  BluetoothScreen() : Screen("bluetooth"){};
-  void show();
-  void back();
-  void menu();
-  void up();
-  void down();
+  BluetoothScreen(Screen *p = nullptr) : Screen(p) {}
+  void show() override;
 };
-
-extern BluetoothScreen bluetoothScreen;

@@ -13,6 +13,3 @@ void ShowBluetoothScreen::show() {
   }
   Watchy::display.printf("\nconfigured\n");
 }
-void ShowBluetoothScreen::back() { Watchy::setScreen(&bluetoothScreen); }
-
-ShowBluetoothScreen showBluetoothScreen;

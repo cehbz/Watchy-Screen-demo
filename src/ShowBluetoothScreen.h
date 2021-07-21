@@ -4,9 +4,6 @@
 
 class ShowBluetoothScreen : public Screen {
  public:
-  ShowBluetoothScreen() : Screen("showBluetooth"){};
-  void show();
-  void back();
+  ShowBluetoothScreen(Screen *p = nullptr) : Screen(p) {}
+  void show() override;
 };
-
-extern ShowBluetoothScreen showBluetoothScreen;

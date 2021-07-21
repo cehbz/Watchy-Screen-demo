@@ -4,9 +4,6 @@
 
 class ShowBatteryScreen : public Screen {
  public:
-  ShowBatteryScreen() : Screen("showBattery"){};
-  void show();
-  void back();
+  ShowBatteryScreen(Screen *p = nullptr) : Screen(p) {}
+  void show() override;
 };
-
-extern ShowBatteryScreen showBatteryScreen;

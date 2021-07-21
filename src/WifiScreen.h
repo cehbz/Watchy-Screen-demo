@@ -4,11 +4,6 @@
 
 class WifiScreen : public Screen {
  public:
-  WifiScreen() : Screen("Wifi"){};
-  void show();
-  void back();
-  void menu();
-  void up();
+  WifiScreen(Screen *p = nullptr) : Screen(p) {}
+  void show() override;
 };
-
-extern WifiScreen wifiScreen;

@@ -11,9 +11,3 @@ void BatteryScreen::show() {
   Watchy::display.setCursor(0, 0);
   Watchy::display.printf("\nbattery\n");
 }
-void BatteryScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
-void BatteryScreen::menu() { Watchy::setScreen(&showBatteryScreen); }
-void BatteryScreen::up() { Watchy::setScreen(&weatherScreen); }
-void BatteryScreen::down() { Watchy::setScreen(&bluetoothScreen); }
-
-BatteryScreen batteryScreen;

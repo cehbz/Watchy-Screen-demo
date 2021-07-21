@@ -10,8 +10,3 @@ void WifiScreen::show() {
   Watchy::display.setCursor(0, 0);
   Watchy::display.printf("\nwifi\n");
 }
-void WifiScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
-void WifiScreen::menu() { Watchy::setScreen(&showWifiScreen); }
-void WifiScreen::up() { Watchy::setScreen(&stepsScreen); }
-
-WifiScreen wifiScreen;

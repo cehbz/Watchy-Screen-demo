@@ -11,9 +11,3 @@ void BluetoothScreen::show() {
   Watchy::display.setCursor(0, 0);
   Watchy::display.printf("\nbluetooth\n");
 }
-void BluetoothScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
-void BluetoothScreen::menu() { Watchy::setScreen(&showBluetoothScreen); }
-void BluetoothScreen::up() { Watchy::setScreen(&batteryScreen); }
-void BluetoothScreen::down() { Watchy::setScreen(&orientationScreen); }
-
-BluetoothScreen bluetoothScreen;

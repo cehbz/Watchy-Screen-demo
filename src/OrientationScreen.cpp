@@ -11,9 +11,3 @@ void OrientationScreen::show() {
   Watchy::display.setCursor(0, 0);
   Watchy::display.printf("\norientation\n");
 }
-void OrientationScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
-void OrientationScreen::menu() { Watchy::setScreen(&showOrientationScreen); }
-void OrientationScreen::up() { Watchy::setScreen(&bluetoothScreen); }
-void OrientationScreen::down() { Watchy::setScreen(&settingsScreen); }
-
-OrientationScreen orientationScreen;

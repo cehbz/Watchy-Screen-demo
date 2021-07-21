@@ -7,8 +7,6 @@
 
 using namespace Watchy;
 
-WeatherScreen weatherScreen;
-
 static const char *weatherConditionCodeToString(int16_t weatherConditionCode) {
   switch (weatherConditionCode) {
     case 200:
@@ -136,7 +134,3 @@ void WeatherScreen::show() {
   DEBUG("\n%d deg\n%s\n", wd.temperature,
         weatherConditionCodeToString(wd.weatherConditionCode));
 }
-
-void WeatherScreen::back() { Watchy::setScreen(Watchy::defaultScreen); }
-void WeatherScreen::up() { Watchy::setScreen(&timeScreen); };
-void WeatherScreen::down() { Watchy::setScreen(&batteryScreen); };

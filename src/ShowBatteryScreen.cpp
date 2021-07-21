@@ -10,6 +10,3 @@ void ShowBatteryScreen::show() {
   Watchy::display.setCursor(0, 0);
   Watchy::display.printf("\n\nbattery\n%4.2fv\n", Watchy::getBatteryVoltage());
 }
-void ShowBatteryScreen::back() { Watchy::setScreen(&batteryScreen); }
-
-ShowBatteryScreen showBatteryScreen;

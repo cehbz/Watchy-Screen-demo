@@ -11,139 +11,39 @@ const int SET_YEAR = 2;
 const int SET_MONTH = 3;
 const int SET_DAY = 4;
 
-SetTimeScreen setTimeScreen;
-
 bool blink;
 bool revert;
 bool commit;
 
-void decrMin(int8_t& v, const int8_t& lo, const int8_t& hi) {
-  if (v-- <= lo) {
-    v = hi;
+RTC_DATA_ATTR uint8_t SetTimeScreen::setIndex;
+
+typedef struct {
+  int8_t SetTimeScreen::*val;
+  int8_t min;
+  int8_t max;
+} Field;
+
+void decrMin(int8_t &val, int8_t &min, int8_t &max) {
+  if (val-- <= min) {
+    val = max;
   }
 }
 
-void incrMax(int8_t& v, const int8_t& lo, const int8_t& hi) {
-  if (v++ >= hi) {
-    v = lo;
+void incrMax(int8_t &val, int8_t &min, int8_t &max) {
+  if (val++ >= max) {
+    val = min;
   }
 }
 
-void _show(int8_t setIndex);
-
-class SetHour : public Screen {
- public:
-  SetHour() : Screen("SetHour") {}
-  void show() { _show(SET_HOUR); }
-  void up() { decrMin(setTimeScreen.hour, 0, 23); }
-  void down() { incrMax(setTimeScreen.hour, 0, 23); }
-  void back() { revert = true; }
-  void menu();
-} setHour;
-
-class SetMinute : public Screen {
- public:
-  SetMinute() : Screen("SetMinute") {}
-  void show() { _show(SET_MINUTE); }
-  void up() { decrMin(setTimeScreen.minute, 0, 59); }
-  void down() { incrMax(setTimeScreen.minute, 0, 59); }
-  void back() { screen = &setHour; }
-  void menu();
-} setMinute;
-
-void SetHour::menu() { screen = &setMinute; }
-
-class SetYear : public Screen {
- public:
-  SetYear() : Screen("SetYear") {}
-  void show() { _show(SET_YEAR); }
-  void up() { decrMin(setTimeScreen.year, 20, 99); }
-  void down() { incrMax(setTimeScreen.year, 20, 99); }
-  void back() { screen = &setMinute; }
-  void menu();
-} setYear;
-
-void SetMinute::menu() { screen = &setYear; }
-
-class SetMonth : public Screen {
- public:
-  SetMonth() : Screen("SetMonth") {}
-  void show() { _show(SET_MONTH); }
-  void up() { decrMin(setTimeScreen.month, 1, 12); }
-  void down() { incrMax(setTimeScreen.month, 1, 12); }
-  void back() { screen = &setYear; }
-  void menu();
-} setMonth;
-
-void SetYear::menu() { screen = &setMonth; }
-
-class SetDay : public Screen {
- public:
-  SetDay() : Screen("SetDay") {}
-  void show() { _show(SET_DAY); }
-  void up() { decrMin(setTimeScreen.day, 1, 31); }
-  void down() { incrMax(setTimeScreen.day, 1, 31); }
-  void back() { screen = &setMonth; }
-  void menu() { commit = true; }
-} setDay;
-
-void SetMonth::menu() { screen = &setDay; }
-
-void _show(int8_t setIndex) {
-  DEBUG("SetTimeScreen::_show(%d)\n", setIndex);
-  while (!pollButtonsAndDispatch()) {
-    blink = 1 - blink;
-    const uint16_t fgColor =
-        (screen->bgColor == GxEPD_WHITE ? GxEPD_BLACK : GxEPD_WHITE);
-
-    display.fillScreen(screen->bgColor);
-    display.setFont(&DSEG7_Classic_Bold_53);
-    display.setTextColor(fgColor);
-
-    display.setCursor(5, 80);
-    if (setIndex == SET_HOUR) {  // blink hour digits
-      display.setTextColor(blink ? fgColor : screen->bgColor);
-    }
-    display.printf("%02d", setTimeScreen.hour);
-
-    display.setTextColor(fgColor);
-    display.print(":");
-
-    display.setCursor(108, 80);
-    if (setIndex == SET_MINUTE) {  // blink minute digits
-      display.setTextColor(blink ? fgColor : screen->bgColor);
-    }
-    display.printf("%02d", setTimeScreen.minute);
-
-    display.setTextColor(fgColor);
-
-    display.setFont(&FreeMonoBold9pt7b);
-    display.setCursor(45, 150);
-    if (setIndex == SET_YEAR) {  // blink minute digits
-      display.setTextColor(blink ? fgColor : screen->bgColor);
-    }
-    display.print(1970 + setTimeScreen.year);
-
-    display.setTextColor(fgColor);
-    display.print("/");
-
-    if (setIndex == SET_MONTH) {  // blink minute digits
-      display.setTextColor(blink ? fgColor : screen->bgColor);
-    }
-    display.printf("%02d", setTimeScreen.month);
-
-    display.setTextColor(fgColor);
-    display.print("/");
-
-    if (setIndex == SET_DAY) {  // blink minute digits
-      display.setTextColor(blink ? fgColor : screen->bgColor);
-    }
-    display.printf("%02d", setTimeScreen.day);
-    display.display(true);  // partial refresh}
-  }
-}
+Field fields[] = {{&SetTimeScreen::hour, 0, 23},
+                  {&SetTimeScreen::minute, 0, 59},
+                  {&SetTimeScreen::year, 20, 99},
+                  {&SetTimeScreen::month, 1, 12},
+                  {&SetTimeScreen::day, 1, 31}};
+const uint8_t numFields = sizeof(fields) / sizeof(fields[0]);
 
 void SetTimeScreen::show() {
+  DEBUG("SetTimeScreen::show index %d\n", setIndex);
   tmElements_t currentTime;
   RTC.read(currentTime);
 
@@ -162,9 +62,58 @@ void SetTimeScreen::show() {
   pinMode(MENU_BTN_PIN, INPUT);
   pinMode(BACK_BTN_PIN, INPUT);
 
-  screen = &setHour;
   while (!revert && !commit) {
-    showWatchFace(true);
+    while (!pollButtonsAndDispatch()) {
+      blink = 1 - blink;
+      const uint16_t fgColor =
+          (screen->bgColor == GxEPD_WHITE ? GxEPD_BLACK : GxEPD_WHITE);
+
+      display.fillScreen(screen->bgColor);
+      display.setFont(&DSEG7_Classic_Bold_53);
+      display.setTextColor(fgColor);
+
+      display.setCursor(5, 80);
+      if (setIndex == SET_HOUR) {  // blink hour digits
+        display.setTextColor(blink ? fgColor : screen->bgColor);
+      }
+      display.printf("%02d", hour);
+
+      display.setTextColor(fgColor);
+      display.print(":");
+
+      display.setCursor(108, 80);
+      if (setIndex == SET_MINUTE) {  // blink minute digits
+        display.setTextColor(blink ? fgColor : screen->bgColor);
+      }
+      display.printf("%02d", minute);
+
+      display.setTextColor(fgColor);
+
+      display.setFont(&FreeMonoBold9pt7b);
+      display.setCursor(45, 150);
+      if (setIndex == SET_YEAR) {  // blink minute digits
+        display.setTextColor(blink ? fgColor : screen->bgColor);
+      }
+      display.print(1970 + year);
+
+      display.setTextColor(fgColor);
+      display.print("/");
+
+      if (setIndex == SET_MONTH) {  // blink minute digits
+        display.setTextColor(blink ? fgColor : screen->bgColor);
+      }
+      display.printf("%02d", month);
+
+      display.setTextColor(fgColor);
+      display.print("/");
+
+      if (setIndex == SET_DAY) {  // blink minute digits
+        display.setTextColor(blink ? fgColor : screen->bgColor);
+      }
+      display.printf("%02d", day);
+      display.display(true);  // partial refresh}
+    }
+    yield();
   }
 
   if (commit) {
@@ -182,5 +131,35 @@ void SetTimeScreen::show() {
     time_t t = makeTime(tm) + FUDGE;
     RTC.set(t);
   }
-  setScreen(&menuScreen);
+  Watchy::setScreen(parent ? parent : Watchy::defaultScreen);
+}
+
+void SetTimeScreen::up() {
+  DEBUG("SetTimeScreen::up index %d\n", setIndex);
+  decrMin(this->*(fields[setIndex].val), fields[setIndex].min,
+          fields[setIndex].max);
+}
+
+void SetTimeScreen::down() {
+  DEBUG("SetTimeScreen::down index %d\n", setIndex);
+  incrMax(this->*(fields[setIndex].val), fields[setIndex].min,
+          fields[setIndex].max);
+}
+
+void SetTimeScreen::back() {
+  DEBUG("SetTimeScreen::back index %d\n", setIndex);
+  if (setIndex == 0) {
+    revert = true;
+  } else {
+    setIndex--;
+  }
+}
+
+void SetTimeScreen::menu() {
+  DEBUG("SetTimeScreen::menu index %d\n", setIndex);
+  if (setIndex == numFields) {
+    commit = true;
+  } else {
+    setIndex++;
+  }
 }

@@ -4,10 +4,6 @@
 
 class TimeScreen : public Screen {
  public:
-  TimeScreen() : Screen("Time"){};
+  TimeScreen(Screen *p = nullptr) : Screen(p) {}
   void show();
-  void back();
-  void down();
 };
-
-extern TimeScreen timeScreen;

@@ -6,10 +6,8 @@
 
 using namespace Watchy;
 
-SetupWifiScreen setupWifiScreen;
-
 class : public Screen {  // waitingForConfigScreen
-  void show() {
+  void show() override {
     display.setFont(&FreeMonoBold9pt7b);
     display.setCursor(0, 30);
     display.println("Connect to");
@@ -18,31 +16,23 @@ class : public Screen {  // waitingForConfigScreen
     display.print("IP: ");
     display.println(WiFi.softAPIP());
   }
-  void up() { setScreen(&menuScreen); }
-  void down() { setScreen(&menuScreen); }
-  void back() { setScreen(&menuScreen); }
-  void menu() { setScreen(&menuScreen); }
 } waitingForConfigScreen;
 
 class : public Screen {  // wifiSetupFailedScreen
-  void show() {
+  void show() override {
     display.setFont(&FreeMonoBold9pt7b);
     display.setCursor(0, 30);
     display.println("Wifi setup");
     display.println("failed");
     display.println("Connection");
     display.println("timed out!");
-    display.println("press any button");
+    display.println("press back");
     display.println("to return to menu");
   }
-  void up() { setScreen(&menuScreen); }
-  void down() { setScreen(&menuScreen); }
-  void back() { setScreen(&menuScreen); }
-  void menu() { setScreen(&menuScreen); }
 } wifiSetupFailedScreen;
 
 class : public Screen {  // wifiSetupSuccessScreen
-  void show() {
+  void show() override {
     display.setFont(&FreeMonoBold9pt7b);
     display.println("Wifi setup");
     display.println("succeeded");
@@ -50,19 +40,19 @@ class : public Screen {  // wifiSetupSuccessScreen
       display.println("Connected to");
       display.println(WiFi.SSID());
     }
-    display.println("press any button");
+    display.println("press back");
     display.println("to return to menu");
   }
-  void up() { setScreen(&menuScreen); }
-  void down() { setScreen(&menuScreen); }
-  void back() { setScreen(&menuScreen); }
-  void menu() { setScreen(&menuScreen); }
 } wifiSetupSuccessScreen;
 
 const int WIFI_AP_TIMEOUT = 60;
 
 void _configModeCallback(WiFiManager *myWiFiManager);
 
+// implement this show as a state machine with three states
+// waiting for setup
+// success
+// failure
 void SetupWifiScreen::show() {
   // the actual show happens in _configModeCallback
   WiFiManager wifiManager;
@@ -71,10 +61,12 @@ void SetupWifiScreen::show() {
   wifiManager.setAPCallback(_configModeCallback);
   if (!wifiManager.autoConnect(WIFI_AP_SSID)) {
     WIFI_CONFIGURED = false;
-    setScreen(&wifiSetupFailedScreen);
+    setScreen(&wifiSetupFailedScreen);  // BUG, we're a child. Setting the
+                                        // screen will forget our parent
   } else {
     WIFI_CONFIGURED = true;
-    setScreen(&wifiSetupSuccessScreen);
+    setScreen(&wifiSetupSuccessScreen);  // BUG, we're a child. Setting the
+                                         // screen will forget our parent
   }
   // turn off radios
   WIFI_CONFIGURED = false;
@@ -83,5 +75,6 @@ void SetupWifiScreen::show() {
 }
 
 void _configModeCallback(WiFiManager *myWiFiManager) {
-  setScreen(&waitingForConfigScreen);
+  setScreen(&waitingForConfigScreen);  // BUG, we're a child. Setting the screen
+                                       // will forget our parent
 }

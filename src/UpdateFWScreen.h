@@ -4,10 +4,7 @@
 
 class UpdateFWScreen : public Screen {
  public:
-  UpdateFWScreen() : Screen("UpdateFWScreen"){};
-  void show();
-  void back();
-  void menu();
+  UpdateFWScreen(Screen *p = nullptr) : Screen(p) {}
+  void show() override;
+  void menu() override;
 };
-
-extern UpdateFWScreen updateFWScreen;

@@ -4,9 +4,6 @@
 
 class ShowOrientationScreen : public Screen {
  public:
-  ShowOrientationScreen() : Screen("ShowOrientation"){};
-  void show();
-  void back();
+  ShowOrientationScreen(Screen *p = nullptr) : Screen(p) {}
+  void show() override;
 };
-
-extern ShowOrientationScreen showOrientationScreen;

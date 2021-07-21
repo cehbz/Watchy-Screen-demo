@@ -4,12 +4,6 @@
 
 class StepsScreen : public Screen {
  public:
-  StepsScreen() : Screen("Steps"){};
-  void show();
-  void back();
-  void menu();
-  void up();
-  void down();
+  StepsScreen(Screen *p = nullptr) : Screen(p) {}
+  void show() override;
 };
-
-extern StepsScreen stepsScreen;

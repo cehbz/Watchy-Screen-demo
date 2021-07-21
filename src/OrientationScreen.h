@@ -4,12 +4,6 @@
 
 class OrientationScreen : public Screen {
  public:
-  OrientationScreen() : Screen("Orientation"){};
-  void show();
-  void back();
-  void menu();
-  void up();
-  void down();
+  OrientationScreen(Screen *p = nullptr) : Screen(p) {}
+  void show() override;
 };
-
-extern OrientationScreen orientationScreen;
