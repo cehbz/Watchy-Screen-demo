@@ -111,7 +111,7 @@ void SetTimeScreen::show() {
         display.setTextColor(blink ? fgColor : screen->bgColor);
       }
       display.printf("%02d", day);
-      display.display(true);  // partial refresh}
+      display.display(true);  // partial refresh
     }
     yield();
   }
@@ -131,6 +131,8 @@ void SetTimeScreen::show() {
     time_t t = makeTime(tm) + FUDGE;
     RTC.set(t);
   }
+  setIndex = 0; // make sure we start at the beginning if we come back
+  DEBUG("SetTimeScreen done. Setting screen to %08lx\n",(unsigned long)parent);
   Watchy::setScreen(parent ? parent : Watchy::defaultScreen);
 }
 
@@ -157,7 +159,7 @@ void SetTimeScreen::back() {
 
 void SetTimeScreen::menu() {
   DEBUG("SetTimeScreen::menu index %d\n", setIndex);
-  if (setIndex == numFields) {
+  if (setIndex == numFields-1) {
     commit = true;
   } else {
     setIndex++;
