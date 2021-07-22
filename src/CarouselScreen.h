@@ -17,11 +17,7 @@ class CarouselScreen : public Screen {
   static bool active;
 
  public:
-  CarouselScreen(Screen *p = nullptr) : Screen(p) {}
-  void setItems(CarouselItem *cis, const int8_t cs) {
-    items = cis;
-    size = cs;
-  }
+  CarouselScreen(CarouselItem *cis, const int8_t cs, Screen *p = nullptr);
   void show() override;
   void menu() override;
   void back() override;

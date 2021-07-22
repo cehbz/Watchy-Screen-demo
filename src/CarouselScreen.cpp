@@ -14,6 +14,17 @@ using namespace Watchy;
 
 RTC_DATA_ATTR int8_t CarouselScreen::index;
 
+CarouselScreen::CarouselScreen(CarouselItem *cis, const int8_t cs, Screen *p)
+    : Screen(p), items(cis), size(cs) {
+  for (int i = 0; i < size; i++) {
+    if (items[i].splash != nullptr) {
+      items[i].splash->parent = this;
+    }
+    if (items[i].child != nullptr) {
+      items[i].child->parent = this;
+    }
+  }
+}
 
 void CarouselScreen::show() {
   DEBUG("CarouselScreen::show index %d\n", index);

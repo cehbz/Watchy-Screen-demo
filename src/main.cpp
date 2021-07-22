@@ -18,32 +18,29 @@
 #include "WeatherScreen.h"
 #include "WifiScreen.h"
 
-CarouselScreen carouselScreen;
-
-MenuScreen menuScreen(&carouselScreen);
-
-SetTimeScreen setTimeScreen(&menuScreen);
-SetupWifiScreen setupWifiScreen(&menuScreen);
-UpdateFWScreen updateFWScreen(&menuScreen);
+SetTimeScreen setTimeScreen;
+SetupWifiScreen setupWifiScreen;
+UpdateFWScreen updateFWScreen;
 
 MenuItem menu[] = {{"Set Time", &setTimeScreen},
                    {"Setup WiFi", &setupWifiScreen},
                    {"Update Firmware", &updateFWScreen}};
 
+MenuScreen menuScreen(menu, sizeof(menu) / sizeof(menu[0]));
 
-TimeScreen timeScreen(&carouselScreen);
-WeatherScreen weatherScreen(&carouselScreen);
-BatteryScreen batteryScreen(&carouselScreen);
-StepsScreen stepsScreen(&carouselScreen);
-OrientationScreen orientationScreen(&carouselScreen);
-BluetoothScreen bluetoothScreen(&carouselScreen);
-WifiScreen wifiScreen(&carouselScreen);
-SettingsScreen settingsScreen(&carouselScreen);
-ShowBatteryScreen showBatteryScreen(&carouselScreen);
-ShowBluetoothScreen showBluetoothScreen(&carouselScreen);
-ShowOrientationScreen showOrientationScreen(&carouselScreen);
-ShowStepsScreen showStepsScreen(&carouselScreen);
-ShowWifiScreen showWifiScreen(&carouselScreen);
+TimeScreen timeScreen;
+WeatherScreen weatherScreen;
+BatteryScreen batteryScreen;
+StepsScreen stepsScreen;
+OrientationScreen orientationScreen;
+BluetoothScreen bluetoothScreen;
+WifiScreen wifiScreen;
+SettingsScreen settingsScreen;
+ShowBatteryScreen showBatteryScreen;
+ShowBluetoothScreen showBluetoothScreen;
+ShowOrientationScreen showOrientationScreen;
+ShowStepsScreen showStepsScreen;
+ShowWifiScreen showWifiScreen;
 
 CarouselItem carousel[] = {{&timeScreen, nullptr},
                            {&weatherScreen, nullptr},
@@ -54,13 +51,11 @@ CarouselItem carousel[] = {{&timeScreen, nullptr},
                            {&wifiScreen, &showWifiScreen},
                            {&settingsScreen, &menuScreen}};
 
+CarouselScreen carouselScreen(carousel, sizeof(carousel) / sizeof(carousel[0]));
 
 void setup() {
   Serial.begin(115200);
   DEBUG("  %ld: setup %d\n", millis(), esp_sleep_get_wakeup_cause());
-
-  menuScreen.setItems(menu, sizeof(menu) / sizeof(menu[0]));
-  carouselScreen.setItems(carousel, sizeof(carousel) / sizeof(carousel[0]));
 
   Watchy::defaultScreen = &carouselScreen;
   Watchy::init();

@@ -12,6 +12,15 @@ const int MENU_HEIGHT = 30;
 
 RTC_DATA_ATTR int8_t MenuScreen::index;
 
+MenuScreen::MenuScreen(MenuItem *mis, const int8_t ms, Screen *p)
+    : Screen(p), items(mis), size(ms) {
+  for (int i = 0; i < size; i++) {
+    if (items[i].screen != nullptr) {
+      items[i].screen->parent = this;
+    }
+  }
+}
+
 void MenuScreen::show() {
   DEBUG("MenuScreen::show index %d\n", index);
   const uint16_t fgColor =

@@ -15,11 +15,7 @@ class MenuScreen : public Screen {
   static bool active;
 
  public:
-  MenuScreen(Screen *p = nullptr) : Screen(p) {}
-  void setItems(MenuItem *mis, const int8_t ms) {
-    items = mis;
-    size = ms;
-  }
+  MenuScreen(MenuItem *mis, const int8_t ms, Screen *p = nullptr);
   void show() override;
   void menu() override;
   void back() override;
