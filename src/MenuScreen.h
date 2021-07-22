@@ -9,14 +9,14 @@ typedef struct {
 
 class MenuScreen : public Screen {
  private:
-  static uint8_t index;
+  static int8_t index;
   MenuItem *items;  // array of MenuItems
   uint8_t size;
   static bool active;
 
  public:
   MenuScreen(Screen *p = nullptr) : Screen(p) {}
-  void setItems(MenuItem *mis, const uint8_t ms) {
+  void setItems(MenuItem *mis, const int8_t ms) {
     items = mis;
     size = ms;
   }

@@ -10,15 +10,10 @@ using namespace Watchy;
 
 const int MENU_HEIGHT = 30;
 
-RTC_DATA_ATTR uint8_t MenuScreen::index;
-RTC_DATA_ATTR bool MenuScreen::active;
+RTC_DATA_ATTR int8_t MenuScreen::index;
 
 void MenuScreen::show() {
   DEBUG("MenuScreen::show index %d\n", index);
-  if (active) {
-    Watchy::showWatchFace(true, items[index].screen);
-    return;
-  }
   const uint16_t fgColor =
       (screen->bgColor == GxEPD_WHITE ? GxEPD_BLACK : GxEPD_WHITE);
   display.setFont(&FreeMonoBold9pt7b);
@@ -41,26 +36,11 @@ void MenuScreen::show() {
   }
 }
 
-void MenuScreen::menu() {
-  if (active) {
-    items[index].screen->menu();
-  } else {
-    active = true;
-    show();
-  }
-}
-void MenuScreen::back() {
-  if (active) {
-    active = false;
-    show();
-  } // else { return to parent, handled by parent }
-}
+void MenuScreen::menu() { Watchy::setScreen(items[index].screen); }
+
+void MenuScreen::back() { setScreen(parent); }
 
 void MenuScreen::up() {
-  if (active) {
-    items[index].screen->up();
-    return;
-  }
   index--;
   if (index < 0) {
     index = size - 1;
@@ -69,11 +49,6 @@ void MenuScreen::up() {
 }
 
 void MenuScreen::down() {
-  if (active) {
-    items[index].screen->down();
-    return;
-  }
-
   index++;
   if (index >= size) {
     index = 0;
