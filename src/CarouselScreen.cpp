@@ -12,25 +12,29 @@
 
 using namespace Watchy;
 
-RTC_DATA_ATTR uint8_t CarouselScreen::index;
-RTC_DATA_ATTR bool CarouselScreen::active;
+RTC_DATA_ATTR int8_t CarouselScreen::index;
+
 
 void CarouselScreen::show() {
+  DEBUG("CarouselScreen::show index %d\n", index);
   Watchy::showWatchFace(true, items[index].splash);
 }
 
 void CarouselScreen::menu() {
+  DEBUG("CarouselScreen::menu index %d\n", index);
   if (items[index].child != nullptr) {
     Watchy::setScreen(items[index].child);
   }
 }
 
 void CarouselScreen::back() {
+  DEBUG("CarouselScreen::back index %d\n", index);
   index = 0;
   show();
 }
 
 void CarouselScreen::up() {
+  DEBUG("CarouselScreen::up index %d\n", index);
   index--;
   if (index < 0) {
     index = size - 1;
@@ -39,6 +43,7 @@ void CarouselScreen::up() {
 }
 
 void CarouselScreen::down() {
+  DEBUG("CarouselScreen::down index %d\n", index);
   index++;
   if (index >= size) {
     index = 0;
