@@ -6,8 +6,12 @@
 
 using namespace Watchy;
 
+// TODO - get rid of this hack
+RTC_DATA_ATTR Screen *globalParent;
+
 class : public Screen {  // waitingForConfigScreen
   void show() override {
+    parent = globalParent;  // TODO find a better way to do this
     display.setFont(&FreeMonoBold9pt7b);
     display.setCursor(0, 30);
     display.println("Connect to");
@@ -20,6 +24,7 @@ class : public Screen {  // waitingForConfigScreen
 
 class : public Screen {  // wifiSetupFailedScreen
   void show() override {
+    parent = globalParent;  // TODO find a better way to do this
     display.setFont(&FreeMonoBold9pt7b);
     display.setCursor(0, 30);
     display.println("Wifi setup");
@@ -33,6 +38,7 @@ class : public Screen {  // wifiSetupFailedScreen
 
 class : public Screen {  // wifiSetupSuccessScreen
   void show() override {
+    parent = globalParent;  // TODO find a better way to do this
     display.setFont(&FreeMonoBold9pt7b);
     display.println("Wifi setup");
     display.println("succeeded");
@@ -55,18 +61,19 @@ void _configModeCallback(WiFiManager *myWiFiManager);
 // failure
 void SetupWifiScreen::show() {
   // the actual show happens in _configModeCallback
+
+  globalParent = parent; // TODO find a better way to do this
+
   WiFiManager wifiManager;
   wifiManager.resetSettings();
   wifiManager.setTimeout(WIFI_AP_TIMEOUT);
   wifiManager.setAPCallback(_configModeCallback);
   if (!wifiManager.autoConnect(WIFI_AP_SSID)) {
     WIFI_CONFIGURED = false;
-    setScreen(&wifiSetupFailedScreen);  // BUG, we're a child. Setting the
-                                        // screen will forget our parent
+    setScreen(&wifiSetupFailedScreen);
   } else {
     WIFI_CONFIGURED = true;
-    setScreen(&wifiSetupSuccessScreen);  // BUG, we're a child. Setting the
-                                         // screen will forget our parent
+    setScreen(&wifiSetupSuccessScreen);
   }
   // turn off radios
   WIFI_CONFIGURED = false;
@@ -75,6 +82,5 @@ void SetupWifiScreen::show() {
 }
 
 void _configModeCallback(WiFiManager *myWiFiManager) {
-  setScreen(&waitingForConfigScreen);  // BUG, we're a child. Setting the screen
-                                       // will forget our parent
+  setScreen(&waitingForConfigScreen);
 }
