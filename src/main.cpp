@@ -12,6 +12,7 @@
 #include "ShowStepsScreen.h"
 #include "ShowWifiScreen.h"
 #include "StepsScreen.h"
+#include "SyncTimeScreen.h"
 #include "TimeScreen.h"
 #include "UpdatefWScreen.h"
 #include "Watchy.h"
@@ -21,10 +22,12 @@
 SetTimeScreen setTimeScreen;
 SetupWifiScreen setupWifiScreen;
 UpdateFWScreen updateFWScreen;
+SyncTimeScreen syncTimeScreen;
 
 MenuItem menu[] = {{"Set Time", &setTimeScreen},
                    {"Setup WiFi", &setupWifiScreen},
-                   {"Update Firmware", &updateFWScreen}};
+                   {"Update Firmware", &updateFWScreen},
+                   {"Sync Time", &syncTimeScreen}};
 
 MenuScreen menuScreen(menu, sizeof(menu) / sizeof(menu[0]));
 
