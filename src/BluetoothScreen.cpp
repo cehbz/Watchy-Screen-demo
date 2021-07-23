@@ -6,7 +6,7 @@
 #include "icons.h"
 
 void BluetoothScreen::show() {
-  constexpr char *label = "bluetooth";
+  constexpr const char *label = "bluetooth";
   const uint16_t fgColor = (bgColor == GxEPD_WHITE ? GxEPD_BLACK : GxEPD_WHITE);
   Watchy::display.setFont(&OptimaLTStd22pt7b);
   int16_t x1, y1;
