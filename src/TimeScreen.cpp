@@ -56,5 +56,5 @@ void TimeScreen::show() {
   // dayStr and monthStr use the same static buffer
   display.print(dayStr(currentTime.Wday));
   display.printf(", %s %d %d\n", monthStr(currentTime.Month), currentTime.Day,
-                 currentTime.Year + YEAR_OFFSET);
+                 currentTime.Year);
 }
