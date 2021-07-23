@@ -58,7 +58,7 @@ CarouselScreen carouselScreen(carousel, sizeof(carousel) / sizeof(carousel[0]));
 
 void setup() {
   Serial.begin(115200);
-  DEBUG("  %ld: setup %d\n", millis(), esp_sleep_get_wakeup_cause());
+  DEBUG("%ld: setup %d\n", millis(), esp_sleep_get_wakeup_cause());
 
   Watchy::defaultScreen = &carouselScreen;
   Watchy::init();
