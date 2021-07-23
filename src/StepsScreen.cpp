@@ -6,7 +6,7 @@
 #include "icons.h"
 
 void StepsScreen::show() {
-  constexpr char *label = "steps";
+  constexpr const char *label = "steps";
   const uint16_t fgColor = (bgColor == GxEPD_WHITE ? GxEPD_BLACK : GxEPD_WHITE);
   Watchy::display.setFont(&OptimaLTStd22pt7b);
   int16_t x1, y1;
