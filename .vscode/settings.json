@@ -2,6 +2,7 @@
     "files.associations": {
         "array": "cpp",
         "random": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "sntp.h": "c"
     }
 }
